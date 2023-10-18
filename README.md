@@ -4,7 +4,7 @@
 
 Este es un ejemplo de simulación de un aeropuerto utilizando Prolog. La simulación se centra en la asignación de pistas a aviones, la consulta de aviones asignados a pistas y la liberación de pistas.
 
-
+## Modelo ER 
 
 ![Imagen de diagrama](modeloER.png)
 
