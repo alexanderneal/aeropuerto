@@ -6,7 +6,7 @@ Este es un ejemplo de simulación de un aeropuerto utilizando Prolog. La simulac
 
 
 
-![Imagen de diagrama](aeroperto/modeloER.png)
+![Imagen de diagrama](modeloER.png)
 
 
 
