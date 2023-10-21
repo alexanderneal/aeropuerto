@@ -36,6 +36,23 @@ comunicarSalida(Avion, Pista) :-
       estado_pista(Pista, ocupada(Avion)),
       retract(estado_pista(Pista, ocupada(Avion))),
       assert(estado_pista(Pista, libre)).
+%Lista PistasLibres que contendrá todas las pistas actualmente libres.
+pistas_libres(PistasLibres) :-
+    findall(Pista, (pista(Pista), estado_pista(Pista, libre)), PistasLibres).
+
+%El avión solicita una pista, comunica su entrada y salida
+realizarAterrizajeDespegue(Avion, Pista, 2) :-
+    !.  
+
+realizarAterrizajeDespegue(Avion, Pista, Contador) :-
+    pedirPista(Avion, Pista),
+    comunicarEntrada(Avion, Pista),
+    comunicarSalida(Avion, Pista),
+
+    NuevoContador is Contador + 1,
+
+    realizarAterrizajeDespegue(Avion, Pista, NuevoContador).
+
 
 % Ejemplo de uso
 ejemplo_torre_control :-
@@ -48,5 +65,3 @@ ejemplo_torre_control :-
     pedirPista(avion3,3),
     comunicarEntrada(avion3,3),
     comunicarSalida(avion3,3).
-
-
