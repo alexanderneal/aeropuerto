@@ -1,92 +1,68 @@
 # Simulación de Aeropuerto
 
-  
+Este es un ejemplo de simulación de una Torre de control de tráfico aéreo. La simulación existe  en tres posibles estados que se dan en un aterrizaje de avión en un aeropuerto. 
+Se consta de la presencia de un avion aproximandose a la torre de control.
+El estado **Libre** , para transitar al siguente debemos **pedirPista**.
+**Asignada** y para pasar al siguiente estado debemos **comunicarEntradaAvion**.
+**Ocupada** y para llegar al estado siguiente, debemos **comunicarSalidaAvion**.
 
-Este es un ejemplo de simulación de un aeropuerto utilizando Prolog. La simulación se centra en la asignación de pistas a aviones, la consulta de aviones asignados a pistas y la liberación de pistas.
+De este modo se completa el ciclo sobre el funcionamiento de la torre de control.
 
 ## Modelo ER 
 
 ![Imagen de diagrama](modeloER.png)
 
-
-
-
-
-
-  
-
 ## Uso
+Aquí se presentan unos ejemplos de consultas que se pueden hacer en la simulación de control de tráfico aéreo:
 
-  
+1. ¿Qué pistas están actualmente libres?
 
-1.  **Asignar una pista a un avión:**
+```prolog
 
-  
+estado_pista(Pista, libre).
 
-Para asignar una pista a un avión, utiliza la regla `asignar_pista(Avion, Pista)`. Por ejemplo:
+```
 
-  
+Esta consulta mostrará las pistas que están actualmente en estado "libre".
 
-```prolog 
+2. ¿Qué pistas están asignadas u ocupadas por un avión específico? Por ejemplo, para verificar si la pista 2 está asignada a algún avión:
 
-Consultar qué pista está asignada a un avión en particular:
-?- asignar_pista(avion1, Pista2).
+```prolog
 
+estado_pista(2, asignada(Avion)).
 
-  
+```
 
-Para consultar la pista asignada a un avión específico, utiliza la regla pista_asignada(Pista, Avion). Por ejemplo:
-?- pista_asignada(Pista, avion1).
+3. ¿Qué aviones están en una pista específica? Por ejemplo, para verificar si el avión avion1 está en la pista 3:
 
-  
+```prolog
 
+estado_pista(3, asignada(avion1)).
 
-  
+```
 
-Consultar qué aviones están asignados a una pista en particular:
-Para consultar qué aviones están asignados a una pista específica, utiliza la regla avion_en_pista(Avion, Pista). Por ejemplo:
-?- avion_en_pista(Avion, Pista2).
+4. ¿Qué aviones han utilizado las pistas hasta ahora? Esta consulta muestra todos los aviones que han utilizado las pistas, ya sea que estén asignadas o ocupadas:
 
-  
+```prolog
 
+avion(Avion), (estado_pista(_, asignada(Avion)) ; estado_pista(_, ocupada(Avion))).
 
-  
+```
 
-Liberar una pista:
-Para liberar una pista, utiliza la regla liberar_pista(Pista). Por ejemplo:
-?- liberar_pista(Pista1).
- 
-  
-  
+5. ¿Cuál es el estado actual de una pista específica? Por ejemplo, para conocer el estado de la pista 1:
 
-Reglas y Definiciones
-pista/1: Define las pistas de aterrizaje disponibles.
+```prolog
 
-avion/1: Define los aviones en cola para aterrizar.
+estado_pista(1, Estado).
 
-asignar_pista/2: Regla para asignar una pista a un avión.
+```
 
-pista_asignada/1: Verifica si una pista está asignada.
+6. ¿Qué aviones han pedido una pista pero aún no han comunicado su entrada? Esta consulta muestra los aviones que han solicitado una pista pero aún no han comunicado su entrada:
 
-avion_en_pista/2: Obtiene el avión asignado a una pista.
+```prolog
 
-liberar_pista/1: Libera una pista asignada.
+avion(Avion), estado_pista(_, asignada(Avion)).
 
-Ejemplos de uso de las reglas y definiciones.
-Consultar la pista asignada a un avión
+```
 
-Puedes consultar la pista asignada a un avión específico utilizando la regla `pista_asignada/2`. Por ejemplo, para ver a qué pista está asignado "avion1":
-  ?- pista_asignada(Pista, avion1).
-
-
-
-
-Consultar los aviones asignados a una pista
-
-Para conocer los aviones asignados a una pista en particular, utiliza la regla `avion_en_pista/2`. Aquí un ejemplo para obtener los aviones asignados a "Pista2":
-?- avion_en_pista(Avion, Pista2).
-
-Liberar una pista
-
-Para liberar una pista, utiliza la regla `liberar_pista/1`. Por ejemplo, para liberar "Pista1":
-?- liberar_pista(Pista1).
+Esto son algunas de las consultas que se pueden realizar para conocer información acerca de los aviones  y las pistas de aterrizaje del aeropuerto.  
