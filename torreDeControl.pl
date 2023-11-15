@@ -1,3 +1,6 @@
+:- dynamic estado_pista/2.
+
+
 % Hechos
 pista(1).
 pista(2).
